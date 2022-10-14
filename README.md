@@ -25,6 +25,6 @@ python app.py
 API endpoints collections [API endpoints](https://github.com/TejasBajania/Project-bank-data/blob/main/Bankcalls.postman_collection.json) we have a postman collection.
 
 
-For detailed understanding check [Document_for_understanding](https://github.com/TejasBajania/Project-bank-data/blob/main/Python%20Developer%20Assignment.pdf).
+For detailed understanding check [Document for understanding](https://github.com/TejasBajania/Project-bank-data/blob/main/Python%20Developer%20Assignment.pdf).
 
 
