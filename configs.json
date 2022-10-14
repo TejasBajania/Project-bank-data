@@ -1,0 +1,7 @@
+{
+    "db_name":"banks-data-dev",
+    "host":"mongodb://localhost/",
+    "port":"27017",
+    "collectName":"banks_data",
+    "csvPath":"Customer Dataset - Sheet1.csv"
+}
