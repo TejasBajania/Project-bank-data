@@ -13,7 +13,8 @@ app.config['JSON_SORT_KEYS'] = False
 def insert_data():
     try:
         print('---inserting data---')
-        response = DataDB().read_and_update()
+        data_input = request.get_json()
+        response = DataDB().read_and_update(data_input['csvPath']+data_input['csvFilename'])
 
         return jsonify({"message": "Data insertion {}".format(response)})
 
@@ -53,15 +54,15 @@ def unique_banks():
         return jsonify({"message": str(e)}), 400
 
 
-@app.route("/dateresponse", methods=["GET"])
-def date_response():
+@app.route("/<start_date>/<end_date>", methods=["GET"])
+def date_response(start_date,end_date):
 
     try:
 
-        data_from_node = request.get_json()
+        data_input = request.get_json()
         response = DataDB().dateswise_data(
-            data_from_node['start_date'],
-            data_from_node['end_date'])
+            start_date,
+            end_date)
         return jsonify({"numOftransactions": response})
 
     except Exception as e:
@@ -80,7 +81,7 @@ def cust_names():
 
     except Exception as e:
 
-        print(f'error at date response: {e}')
+        print(f'error at customer names: {e}')
         return jsonify({"message": str(e)}), 400
 
 
@@ -94,7 +95,7 @@ def trans_summary():
 
     except Exception as e:
 
-        print(f'error at date response: {e}')
+        print(f'error at transactions summary: {e}')
         return jsonify({"message": str(e)}), 400
 
 
@@ -108,7 +109,7 @@ def trans_amount_summary():
 
     except Exception as e:
 
-        print(f'error at date response: {e}')
+        print(f'error at transactions amount summary: {e}')
         return jsonify({"message": str(e)}), 400
 
 
@@ -122,7 +123,7 @@ def total_amount():
 
     except Exception as e:
 
-        print(f'error at date response: {e}')
+        print(f'error at total transactions amount: {e}')
         return jsonify({"message": str(e)}), 400
 
 

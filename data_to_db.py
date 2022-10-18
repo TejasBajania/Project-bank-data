@@ -14,18 +14,18 @@ class DataDB():
 
         self.client = pymongo.MongoClient(
             configs['host'], int(configs['port']))
-        self.csv_path = configs['csvPath']
+
         self.mydb = self.client[configs['db_name']]
         self.mycol = self.mydb[configs['collectName']]
 
-    def read_and_update(self):
+    def read_and_update(self, csv_path):
         """
         This will take the data, and saves it in the database after processing and return a successful response.
         """
         try:
             print('--- Reading and updating database ---')
 
-            data_from_csv = pd.read_csv(self.csv_path)
+            data_from_csv = pd.read_csv(csv_path)
             data_from_csv.drop_duplicates(inplace=True)
 
             data_from_csv[['TXN',
@@ -38,7 +38,7 @@ class DataDB():
                                                                                  expand=True)
             data_inserted = data_from_csv.to_dict(orient='records')
             x = self.mycol.insert_many(data_inserted)
-
+            self.client.close()
             print(data_from_csv.head())
             return "success"
 
@@ -53,6 +53,7 @@ class DataDB():
         try:
             print('--- Fetching records count ---')
             record_count = self.mycol.find().count()
+            self.client.close()
             return record_count
 
         except Exception as e:
@@ -67,6 +68,7 @@ class DataDB():
         try:
             print('--- Fetching unique bank names ---')
             unique_bnames = self.mycol.find().distinct('BANK')
+            self.client.close()
             return unique_bnames
 
         except Exception as e:
@@ -85,6 +87,8 @@ transactions occurred during that interval."""
                     {}, {'_id': 0, 'TXN DATE': 1, 'TXN': 1}):
 
                 coll_list.append(coll)
+            
+            self.client.close()
 
             df_read = pd.DataFrame(coll_list)
             end_date = datetime.strptime(end_date, '%Y-%m-%d')
@@ -109,6 +113,8 @@ format. ( e.g, Ram Mishra )"""
             for coll in self.mycol.find({}, {'_id': 0, 'CUST_NAM': 1}):
 
                 coll_list.append(coll)
+            
+            self.client.close()
 
             df_read = pd.DataFrame(coll_list)
             res_cust_name = {'CamelCase': [], 'TitleCase': []}
@@ -132,6 +138,8 @@ format. ( e.g, Ram Mishra )"""
             for coll in self.mycol.find({}, {'_id': 0, 'TRANS_TYPE': 1}):
 
                 coll_list.append(coll)
+            
+            self.client.close()
 
             df_read = pd.DataFrame(coll_list)
 
@@ -152,6 +160,8 @@ format. ( e.g, Ram Mishra )"""
                     {}, {'_id': 0, 'TRANS_TYPE': 1, 'AMOUNT': 1}):
 
                 coll_list.append(coll)
+            
+            self.client.close()
 
             df_read = pd.DataFrame(coll_list)
 
@@ -172,7 +182,9 @@ format. ( e.g, Ram Mishra )"""
             for coll in self.mycol.find({}, {'_id': 0, 'AMOUNT': 1}):
 
                 coll_list.append(coll)
-
+            
+            self.client.close()
+            
             df_read = pd.DataFrame(coll_list)
 
             summ_data = df_read.sum()

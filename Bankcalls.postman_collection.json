@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "618ae344-571a-4fff-bdea-2e55ef818e4f",
+		"_postman_id": "6e8e3804-d110-4ed2-83b9-ffe1b5e85fd2",
 		"name": "Bankcalls",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10,6 +10,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"csvPath\": \"F:/Project-bank-data/\",\r\n    \"csvFilename\": \"customer_data.csv\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:5000/post_data",
 					"protocol": "http",
@@ -80,14 +89,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/dateresponse",
+					"raw": "http://localhost:5000/2022-07-12/2022-07-19",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
-						"dateresponse"
+						"2022-07-12",
+						"2022-07-19"
 					]
 				}
 			},
