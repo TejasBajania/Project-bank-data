@@ -10,6 +10,8 @@ git clone  https://github.com/TejasBajania/Project-bank-data.git
 
 ### Installing requirements
 ```console
+conda create -n bank_data_env python==3.7.11
+conda activate bank_data_env
 pip install -r requirements.txt
 ```
 
