@@ -17,6 +17,7 @@ pip install -r requirements.txt
 
 #### Start server
 ```console
+conda activate bank_data_env
 python app.py
 ```
 
